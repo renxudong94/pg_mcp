@@ -14,7 +14,9 @@ from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 class DatabaseConfig(BaseSettings):
     """PostgreSQL database connection configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="DATABASE_")
+    model_config = SettingsConfigDict(
+        env_prefix="DATABASE_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     host: str = Field(default="localhost", description="Database host")
     port: int = Field(default=5432, ge=1, le=65535, description="Database port")
@@ -46,7 +48,9 @@ class DatabaseConfig(BaseSettings):
 class OpenAIConfig(BaseSettings):
     """OpenAI API configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="OPENAI_")
+    model_config = SettingsConfigDict(
+        env_prefix="OPENAI_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     api_key: SecretStr = Field(default=SecretStr(""), description="OpenAI API key")
     model: str = Field(default="gpt-4o-mini", description="Model to use for SQL generation")
@@ -90,7 +94,9 @@ def _parse_str_list(v: str | list[str]) -> list[str]:
 class SecurityConfig(BaseSettings):
     """Security and access control configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="SECURITY_")
+    model_config = SettingsConfigDict(
+        env_prefix="SECURITY_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     allow_write_operations: bool = Field(
         default=False, description="Allow write operations (INSERT, UPDATE, DELETE)"
@@ -135,7 +141,9 @@ class SecurityConfig(BaseSettings):
 class ValidationConfig(BaseSettings):
     """Query validation configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="VALIDATION_")
+    model_config = SettingsConfigDict(
+        env_prefix="VALIDATION_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     max_question_length: int = Field(
         default=10000, ge=1, le=50000, description="Maximum question length in characters"
@@ -160,7 +168,9 @@ class ValidationConfig(BaseSettings):
 class CacheConfig(BaseSettings):
     """Schema cache configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="CACHE_")
+    model_config = SettingsConfigDict(
+        env_prefix="CACHE_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     schema_ttl: int = Field(
         default=3600, ge=60, le=86400, description="Schema cache TTL in seconds"
@@ -172,7 +182,9 @@ class CacheConfig(BaseSettings):
 class ResilienceConfig(BaseSettings):
     """Resilience and fault tolerance configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="RESILIENCE_")
+    model_config = SettingsConfigDict(
+        env_prefix="RESILIENCE_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     max_retries: int = Field(default=3, ge=0, le=10, description="Maximum retry attempts")
     retry_delay: float = Field(
@@ -204,7 +216,9 @@ class ResilienceConfig(BaseSettings):
 class ObservabilityConfig(BaseSettings):
     """Observability and monitoring configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="OBSERVABILITY_")
+    model_config = SettingsConfigDict(
+        env_prefix="OBSERVABILITY_", env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
 
     metrics_enabled: bool = Field(default=True, description="Enable Prometheus metrics")
     metrics_port: int = Field(
